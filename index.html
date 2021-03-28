@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <title>Penguil</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐧</text></svg>">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <h1>Penguil</h1>
+
+    <p><a href="https://github.com/penguil">GitHub</a></p>
+
+    <h2>Contact</h2>
+
+    <form id="contact" action="https://formspree.io/f/xwkaeyzr" method="POST">
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" name="email" />
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea name="message" rows=3></textarea>
+      </div>
+      <div class="form-group">
+        <button>Submit</button>
+      </div>
+      <div class="form-group">
+        <p id="status"></p>
+      </div>
+    </form>
+
+    <script>
+      const $form = document.getElementById('contact');
+
+      async function handleSubmit(event) {
+        event.preventDefault();
+        const $status = document.getElementById('status');
+        const data = new FormData(event.target);
+
+        try {
+          const response = await fetch(event.target.action, {
+            method: $form.method,
+            body: data,
+            headers: {
+              'Accept': 'application/json'
+            },
+          });
+
+          $status.innerHTML = 'Thanks for your submission!';
+          $form.reset();
+        } catch (error) {
+          $status.innerHTML = 'Oops! There was a problem submitting your form';
+        }
+      }
+      $form.addEventListener('submit', handleSubmit);
+    </script>
+  </body>
+</html>
